@@ -1,0 +1,32 @@
+---
+
+- hosts: all
+  become: true 
+  pre_tasks:
+
+  - name: repo index updates (Ubuntu)
+    tags: always
+    apt:
+      update_cache: yes 
+    changed_when: false
+    when: ansible_distribution == "Ubuntu"
+
+- hosts: all
+  become: true
+  roles:
+    - base
+
+- hosts: dev_machine
+  become: true
+  roles:
+    - dev_machine
+
+- hosts: attack_machine
+  become: true
+  roles:
+    - attack_machine
+      
+- hosts: malware_machine
+  become: true
+  roles:
+    - malware_machine

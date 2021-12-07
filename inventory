@@ -1,0 +1,9 @@
+[dev_machine]
+192.168.0.32 
+
+[attack_machine]
+#192.168.255.255
+
+[malware_machine]
+#192.168.255.255
+
