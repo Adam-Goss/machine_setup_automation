@@ -1,17 +1,54 @@
+# upgrade Ubuntu distro.
+
+- name: upgrade Ubuntu distro 
+  tags: upgrade
+  apt: upgrade=dist
+  when: ansible_distribution == "Ubuntu"
+
 # install VS code
-
-
+- name: install vscode as snap
+  tags: vscode
+  snap:  
+    name: code
+    classic: yes
+  when: ansible_distribution == "Ubuntu"
 
 
 # --- Python tasks --- #
+- name: install/upgrading Python + virtual environment package
+  apt:
+    name:
+      - python3
+      - python3-venv
+      - python3-pip
+    state: latest
+  when: ansible_distribution == "Ubuntu"
 
+- name: make Python projects directory
+  file:
+    path: /home/{{remote_user}}/python_projects
+    state: directory
+    mode: '0755'
 
-# -------------------- #
+# - name: installing pip packages 
+#   pip:
+#     name:
+#       - hashcrack
+# -------------------------------------------- #
 
 
 
 # --- Go tasks --- #
+# TODO:
+# - install go
+# - setup correct directory structure
+# - create/copy across a ~/.profile file that includes GOROOT and GOPATH
 
 
-# ---------------- #
+- name: make Go projects directory
+  file:
+    path: /home/{{remote_user}}/go_projects
+    state: directory
+    mode: '0755'
+# -------------------------------------------- #
 
