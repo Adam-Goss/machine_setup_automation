@@ -3,22 +3,20 @@ This project uses Ansible to automate setting up machines for different purposes
 Once a Virtual Machine has been setup it's configuration can be automated using Ansible from the control machine with the files here. 
 This saves time and provides a consistent approach for creating the infrastructure required to perform tasks like development, malware analysis, and pentesting.
 
-<br>
-
 ### Details
 
 This repository consists of the following files:
-- local.yml -- This is the Playbook that Ansible expects to find by default in pull-mode, think of it as an "index" of sorts that pulls other Playbooks in.
+- machines.yml -- This is the default Playbook that Ansible runs and is used to configure all machines using roles.
+
+- bootstrap.yml -- This is a bootstrap Playbook that is used to prime all machines to be configured using machines.yml file.
 
 - ansible.cfg -- Configuration settings for Ansible goes here.
 
-- group_vars/ -- This directory is where I can place variables that will be applied on every system.
-
-- host_vars/ -- Each laptop/desktop/server gets a host_vars file in this folder, named after its hostname. Sets variables specific to that computer.
+- host_vars/ -- Each machine gets a host_vars file in this folder, named after its hostname (or IP address), which sets variables specific to that machine.
 
 - inventory -- This is the inventory file and is used by Ansible to known which group to put a machine in.
 
-- role -- This directory contains my base, dev_machine, attack_machine, and malware_machine roles. Every host gets the base role. Then either is assigned another role via the inventory file, depending on it's intended usage.
+- roles -- This directory contains my base, dev_machine, attack_machine, and malware_machine roles. Every host gets the base role. Then either is assigned another role via the inventory file, depending on it's intended usage.
 
 - roles/base -- This role is for every host, regardles of the type of device it is. This role contains things that are intended to be on every host, such as default configs, users, etc.
 
@@ -29,8 +27,6 @@ This repository consists of the following files:
 - roles/malware_machine -- This role is for malware analysis machines and installs appropriate tools for this.
 
 
-
-<br>
 
 ### Usage
 
