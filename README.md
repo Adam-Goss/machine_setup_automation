@@ -6,9 +6,9 @@ This saves time and provides a consistent approach for creating the infrastructu
 <br>
 
 Three types of machines are defined for configuration:
-- dev_machine = development machine installed with: Python, Go, VSCode, neovim -- Ubuntu
-- attack_machine = pentest machine with necessary tools installed -- Ubuntu
-- malware_machine = malware analysis machine with analysis tools installed -- TBD
+- dev_machine -- This machine is installed with a development environment and currently includes; Python, Go, VSCode, and neovim. Uses a Ubuntu base.
+- attack_machine -- This machine is installed with pentesting tools and can be used to attack targets. Uses a Ubuntu base.
+- malware_machine -- This machine is installed with malware analysis tools. Uses a [TBD] base. 
 
 <br>
 
