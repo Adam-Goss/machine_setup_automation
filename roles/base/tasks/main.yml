@@ -17,17 +17,24 @@
 
 
 # --- common tools installation --- #
-- name: install common tools
-  tags: tools,neovim,tmux,alacritty,zsh,flameshot,tldr
+- name: install common tools (apt)
+  tags: tools,neovim,tmux,alacritty,zsh,flameshot,tldr,git
   apt:
     name: 
       - neovim
       - tmux
-      - alacritty
       - zsh
-      - flameshot-gui
+      - flameshot
       - tldr
+      - git
     state: latest
+  when: ansible_distribution == "Ubuntu"
+
+- name: install common tools (snap)
+  tags: tools,alacritty
+  snap:  
+    name: alacritty
+    classic: yes
   when: ansible_distribution == "Ubuntu"
 # ------------------------------------ #
 

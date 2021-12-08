@@ -35,10 +35,10 @@ This repository consists of the following files:
 Walkthrough:
 1. create default Virtual Machine and install OpenSSH server (`sudo apt install openssh-server`).
 2. SSH into the system with `ssh <user>@<ip>`.
-3. run `ansible-playbook --ask-become-pass bootstraml.yml -k <user_pass>` to prime machine for setup.
-4. find IP address of machine and add it under the configuration group in **inventory** file.
+3. find IP address of machine and add it under the configuration group in **inventory** file.
+4. run `ansible-playbook --ask-become-pass bootstraml.yml -k <user_pass>` to prime machine for setup.
 5. add required variables in **host_vars** directory under IP address of the machine.
-5. run `ansible-playbook machines.yml -k` (if you don't want to use SSH key) to configure defined machine.
+6. run `ansible-playbook machines.yml -k` (if you don't want to use SSH key) to configure defined machine.
 
 > Alternatively you can setup an SSH key and run `ansible-playbook machines.yml` (see commented out lines in boostrap.yml)
 

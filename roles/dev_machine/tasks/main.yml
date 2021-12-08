@@ -1,21 +1,3 @@
-
-# --- IDE tasks --- #
-- name: install vscode as snap
-  tags: vscode
-  snap:  
-    name: code
-    classic: yes
-  when: ansible_distribution == "Ubuntu"
-
-- name: install mu editor
-  tags: mu-editor
-  apt:
-    name: mu-editor
-    state: latest
-  when: ansible_distribution == "Ubuntu"
-# -------------------------------------------- #
-
-
 # --- Python tasks --- #
 - name: install/upgrading Python + useful packages
   apt:
@@ -42,7 +24,6 @@
 # -------------------------------------------- #
 
 
-
 # --- Go tasks --- #
 # TODO:
 # - setup correct directory structure (TBD)
@@ -63,10 +44,24 @@
     owner: "{{remote_user}}"
     group: "{{remote_user}}"
     mode: '0777'
-
 # -------------------------------------------- #
 
 
+# --- IDE tasks --- #
+- name: install vscode as snap
+  tags: vscode
+  snap:  
+    name: code
+    classic: yes
+  when: ansible_distribution == "Ubuntu"
+
+- name: install mu editor/interactive shell
+  tags: mu-editor
+  apt:
+    name: mu-editor
+    state: latest
+  when: ansible_distribution == "Ubuntu"
+# -------------------------------------------- #
 
 
 # --- gnome appearence --- #
