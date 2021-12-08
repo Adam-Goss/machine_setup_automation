@@ -32,7 +32,7 @@ This repository consists of the following files:
 
 ### Usage
 
-Basic steps:
+Walkthrough:
 1. create default Virtual Machine and install OpenSSH server (`sudo apt install openssh-server`).
 2. SSH into the system with `ssh <user>@<ip>`.
 3. run `ansible-playbook --ask-become-pass bootstraml.yml -k <user_pass>` to prime machine for setup.
