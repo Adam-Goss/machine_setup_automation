@@ -1,4 +1,12 @@
-# script sets up a development machine environment in Ubuntu
+# upgrade Ubuntu distro.
+- name: upgrade Ubuntu distro 
+  tags: upgrade
+  apt: upgrade=dist
+  when: ansible_distribution == "Ubuntu"
+  
+ 
+
+
 
 
 # --- IDE tasks --- #
