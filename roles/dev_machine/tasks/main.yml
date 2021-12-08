@@ -1,13 +1,3 @@
-# upgrade Ubuntu distro.
-- name: upgrade Ubuntu distro 
-  tags: upgrade
-  apt: upgrade=dist
-  when: ansible_distribution == "Ubuntu"
-  
- 
-
-
-
 
 # --- IDE tasks --- #
 - name: install vscode as snap
@@ -17,29 +7,12 @@
     classic: yes
   when: ansible_distribution == "Ubuntu"
 
-- name: install neovim
-  tags: neovim
+- name: install mu editor
+  tags: mu-editor
   apt:
-    name: neovim
+    name: mu-editor
     state: latest
   when: ansible_distribution == "Ubuntu"
-
-    #- name: copy neovim config directory 
-    #  tags: neovim-config
-    #  copy:
-    #    src: nvim
-    #    dest: /home/{{remote_user}}/.config/nvim
-    #    owner: "{{remote_user}}"
-    #    group: "{{remote_user}}"
-    #    mode: '0777'
-    #    directory_mode: yes
-
-    #- name: copy neovim config directory 
-    #  tags: neovim-config
-    #  synchronize:
-    #    src: nvim
-    #    dest: /home/{{remote_user}}/.config/nvim
-
 # -------------------------------------------- #
 
 

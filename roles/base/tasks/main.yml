@@ -1,3 +1,4 @@
+# --- SSH stuff ---#
 #- name: add ssh key for simone
 #  authorized_key:
 #    user: simone
@@ -12,3 +13,40 @@
     group: root
     mode: 0644
   notify: restart_sshd
+# ------------------------------------ #
+
+
+# --- common tools installation --- #
+- name: install common tools
+  tags: tools,neovim,tmux,alacritty,zsh,flameshot,tldr
+  apt:
+    name: 
+      - neovim
+      - tmux
+      - alacritty
+      - zsh
+      - flameshot-gui
+      - tldr
+    state: latest
+  when: ansible_distribution == "Ubuntu"
+# ------------------------------------ #
+
+
+# --- common tools configuration --- #
+
+# - name: copy neovim config directory 
+#  tags: neovim-config
+#  copy:
+#    src: nvim
+#    dest: /home/{{remote_user}}/.config/nvim
+#    owner: "{{remote_user}}"
+#    group: "{{remote_user}}"
+#    mode: '0777'
+#    directory_mode: yes
+
+# - name: copy neovim config directory 
+#  tags: neovim-config
+#  synchronize:
+#    src: nvim
+#    dest: /home/{{remote_user}}/.config/nvim
+# ------------------------------------ #
