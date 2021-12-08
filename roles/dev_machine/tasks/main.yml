@@ -1,12 +1,4 @@
-# upgrade Ubuntu distro.
-- name: upgrade Ubuntu distro 
-  tags: upgrade
-  apt: upgrade=dist
-  when: ansible_distribution == "Ubuntu"
-  
- 
-
-
+# script sets up a development machine environment in Ubuntu
 
 
 # --- IDE tasks --- #
@@ -177,6 +169,13 @@
   dconf:
     key: "/org/gnome/shell/extensions/dash-to-dock/dock-position"
     value: "'BOTTOM'" 
+    
+- name: gnome | appearance | favourite apps
+  tags: gnome,dock
+  become_user: dev
+  dconf:
+    key: "/org/gnome/shell/favorite-apps"
+    value: "['firefox.desktop', 'code_code.desktop', 'org.gnome.Terminal.desktop', 'gedit.desktop']" 
 # -------------------------------------------- #
 
 
