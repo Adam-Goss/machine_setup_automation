@@ -5,13 +5,31 @@
   apt: upgrade=dist
   when: ansible_distribution == "Ubuntu"
 
-# install VS code
+  # --- IDE tasks --- #
 - name: install vscode as snap
   tags: vscode
   snap:  
     name: code
     classic: yes
   when: ansible_distribution == "Ubuntu"
+
+- name: install neovim
+  tags: neovim
+  apt:
+    name: neovim
+    state: latest
+  when: ansible_distribution == "Ubuntu"
+
+- name: copy neovim config directory
+  tags: neovim-config
+  copy:
+    src: nvim
+    dest: /home/{{remote_user}}/.config/nvim
+    owner: "{{remote_user}}"
+    group: "{{remote_user}}"
+    mode: '0777'
+
+# -------------------------------------------- #
 
 
 # --- Python tasks --- #
@@ -28,7 +46,9 @@
   file:
     path: /home/{{remote_user}}/python_projects
     state: directory
-    mode: '0755'
+    owner: "{{remote_user}}"
+    group: "{{remote_user}}"
+    mode: '0777'
 
 # - name: installing pip packages 
 #   pip:
@@ -40,15 +60,24 @@
 
 # --- Go tasks --- #
 # TODO:
-# - install go
-# - setup correct directory structure
-# - create/copy across a ~/.profile file that includes GOROOT and GOPATH
+# - setup correct directory structure (TBD)
+# - create/copy across a ~/.profile file that includes GOROOT and GOPATH (TBD)
+
+- name: install go 
+  apt:
+    name:
+      - golang-go
+    state: latest 
+  when: ansible_distribution == "Ubuntu"
 
 
 - name: make Go projects directory
   file:
     path: /home/{{remote_user}}/go_projects
     state: directory
-    mode: '0755'
+    owner: "{{remote_user}}"
+    group: "{{remote_user}}"
+    mode: '0777'
+
 # -------------------------------------------- #
 
