@@ -1,11 +1,15 @@
 # upgrade Ubuntu distro.
-
 - name: upgrade Ubuntu distro 
   tags: upgrade
   apt: upgrade=dist
   when: ansible_distribution == "Ubuntu"
+  
+ 
 
-  # --- IDE tasks --- #
+
+
+
+# --- IDE tasks --- #
 - name: install vscode as snap
   tags: vscode
   snap:  
@@ -20,25 +24,33 @@
     state: latest
   when: ansible_distribution == "Ubuntu"
 
-- name: copy neovim config directory
-  tags: neovim-config
-  copy:
-    src: nvim
-    dest: /home/{{remote_user}}/.config/nvim
-    owner: "{{remote_user}}"
-    group: "{{remote_user}}"
-    mode: '0777'
+    #- name: copy neovim config directory 
+    #  tags: neovim-config
+    #  copy:
+    #    src: nvim
+    #    dest: /home/{{remote_user}}/.config/nvim
+    #    owner: "{{remote_user}}"
+    #    group: "{{remote_user}}"
+    #    mode: '0777'
+    #    directory_mode: yes
+
+    #- name: copy neovim config directory 
+    #  tags: neovim-config
+    #  synchronize:
+    #    src: nvim
+    #    dest: /home/{{remote_user}}/.config/nvim
 
 # -------------------------------------------- #
 
 
 # --- Python tasks --- #
-- name: install/upgrading Python + virtual environment package
+- name: install/upgrading Python + useful packages
   apt:
     name:
       - python3
       - python3-venv
       - python3-pip
+      - python3-psutil
     state: latest
   when: ansible_distribution == "Ubuntu"
 
@@ -80,4 +92,92 @@
     mode: '0777'
 
 # -------------------------------------------- #
+
+
+
+
+# --- gnome appearence --- #
+- name: gnome | appearance | copy wallpaper file
+  tags: gnome,gnome-wallpaper
+  copy:
+    src: dev-wallpaper.jpg
+    dest: /usr/share/backgrounds/dev-wallpaper.jpg
+    owner: root
+    group: root
+    mode: 0644
+
+- name: gnome | appearance | set wallpaper
+  tags: gnome,gnome-wallpaper
+  become_user: dev
+  dconf:
+    key: "/org/gnome/desktop/background/picture-uri"
+    value: "'file:///usr/share/backgrounds/dev-wallpaper.jpg'"
+
+- name: gnome | appearance | set wallpaper position
+  tags: gnome,gnome-wallpaper
+  become_user: dev
+  dconf:
+    key: "/org/gnome/desktop/background/picture-options"
+    value: "'zoom'"
+
+- name: gnome | appearance | copy lock screen background file
+  tags: gnome,gnome-lockscreen
+  copy:
+    src: dev-lockscreen.jpg
+    dest: /usr/share/backgrounds/dev-lockscreen.jpg
+    owner: root
+    group: root
+    mode: 0644
+
+- name: gnome | appearance | set lock screen background
+  tags: gnome,gnome-lockscreen
+  become_user: dev
+  dconf:
+    key: "/org/gnome/desktop/screensaver/picture-uri"
+    value: "'file:///usr/share/backgrounds/dev-lockscreen.jpg'"
+
+- name: gnome | appearance | set lock screen background position
+  tags: gnome,gnome-lockscreen
+  become_user: dev
+  dconf:
+    key: "/org/gnome/desktop/screensaver/picture-options"
+    value: "'zoom'"
+    
+- name: gnome | appearance | gtk theme
+  tags: gnome,gnome-gtk-theme
+  become_user: dev
+  dconf:
+    key: "/org/gnome/desktop/interface/gtk-theme"
+    value: "'Yaru-dark'"    
+
+- name: gnome | appearance | dock autohide 1
+  tags: gnome,dock
+  become_user: dev
+  dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock/autohide"
+    value: "'True'" 
+    
+- name: gnome | appearance | dock autohide 2
+  tags: gnome,dock
+  become_user: dev
+  dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock/autohide-in-fullscreen"
+    value: "'True'" 
+
+- name: gnome | appearance | dock icon size
+  tags: gnome,dock
+  become_user: dev
+  dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock/dash-max-icon-size"
+    value: "18" 
+    
+- name: gnome | appearance | dock position
+  tags: gnome,dock
+  become_user: dev
+  dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock/dock-position"
+    value: "'BOTTOM'" 
+# -------------------------------------------- #
+
+
 
