@@ -47,5 +47,7 @@ Walkthrough:
 ---
 
 To do:
+- add common applications to base role; tmux, alacritty, zsh, flameshot, tldr, neovim (move from dev_machine role)
+- add config files for default apps to be copied across
 - automate attack_machine
 - automate malware_machine
