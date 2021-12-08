@@ -23,21 +23,21 @@
 - hosts: all
   become: true
   tasks:
-    - name: add simone user
+    - name: add dev user
       tags: always
       user:
-        name: simone
+        name: dev
         groups: root
-    - name: add ssh key for simone 
-      tags: always
-      authorized_key:
-        user: simone
-        key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAe7/ofWLNBq3+fRn3UmgAizdicLs9vcS4Oj8VSOD1S/ ansible"
-    - name: add sudoers file for simone 
+          # - name: add ssh key for dev
+          #   tags: always
+          #   authorized_key:
+          #     user: dev
+          #     key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAe7/ofWLNBq3+fRn3UmgAizdicLs9vcS4Oj8VSOD1S/ ansible"
+    - name: add sudoers file for dev
       tags: always
       copy:
-        src: sudoer_simone
-        dest: /etc/sudoers.d/simone
+        src: sudoer_dev
+        dest: /etc/sudoers.d/dev
         owner: root
         group: root
         mode: 0440
