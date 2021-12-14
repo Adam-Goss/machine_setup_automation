@@ -1,7 +1,7 @@
 # Machine Setup Automation
 This project uses Ansible to automate setting up machines for different purposes. 
 Once a Virtual Machine has been setup it's configuration can be automated using Ansible from the control machine with the files here. 
-This saves time and provides a consistent approach for creating the infrastructure required to perform tasks like development, malware analysis, and pentesting.
+This saves time and provides a consistent approach for creating the infrastructure required to perform tasks like development, malware analysis, pentestration testing, and container deployment.
 
 ---
 
