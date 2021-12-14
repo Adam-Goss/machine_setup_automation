@@ -1,0 +1,154 @@
+# --- docker and portainer tasks --- #
+- name: install docker and docker-compose
+  apt:
+    name:
+      - python3
+      - python3-venv
+      - python3-pip
+      - python3-psutil
+      - docker.io
+      - docker-compose
+    state: latest
+  when: ansible_distribution == "Ubuntu"
+
+  #- name: add user to docker group 
+  #  shell:
+  #    cmd: sudo usermode -aG docker $USER
+
+- name: create portainer data volume
+  shell:
+    cmd: docker volume create portainer_data
+
+- name: create portainer docker management container
+  docker_container:
+    name: portainer
+    image: portainer/portainer-ce
+    state: started 
+    restart: yes
+    pull: yes
+    ports:
+      - "8000:8000"
+      - "9000:9000"
+    volumes:
+      - portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock 
+
+- name: create heimdall data volume
+  shell:
+    cmd: docker volume create heimdall_data
+
+- name: create heimdall application dashboard container
+  docker_container:
+    name: heimdall
+    image: linuxserver/heimdall
+    state: started 
+    restart: yes
+    pull: yes 
+    ports:
+      - "80:80"
+      - "443:443"
+    env: 
+      PUID: "1000"
+      PGID: "1000"
+      TZ: "Europe/London"
+    volumes:
+      - heimdall_data:/config
+
+
+# -------------------------------------------- #
+
+
+
+
+# --- gnome appearence --- #
+- name: gnome | appearance | copy wallpaper file
+  tags: gnome,gnome-wallpaper
+  copy:
+    src: docker-wallpaper.jpg
+    dest: /usr/share/backgrounds/docker-wallpaper.jpg
+    owner: root
+    group: root
+    mode: 0644
+
+- name: gnome | appearance | set wallpaper
+  tags: gnome,gnome-wallpaper
+  become_user: docker
+  dconf:
+    key: "/org/gnome/desktop/background/picture-uri"
+    value: "'file:///usr/share/backgrounds/docker-wallpaper.jpg'"
+
+- name: gnome | appearance | set wallpaper position
+  tags: gnome,gnome-wallpaper
+  become_user: docker
+  dconf:
+    key: "/org/gnome/desktop/background/picture-options"
+    value: "'zoom'"
+
+- name: gnome | appearance | copy lock screen background file
+  tags: gnome,gnome-lockscreen
+  copy:
+    src: docker-lockscreen.jpg
+    dest: /usr/share/backgrounds/docker-lockscreen.jpg
+    owner: root
+    group: root
+    mode: 0644
+
+- name: gnome | appearance | set lock screen background
+  tags: gnome,gnome-lockscreen
+  become_user: docker
+  dconf:
+    key: "/org/gnome/desktop/screensaver/picture-uri"
+    value: "'file:///usr/share/backgrounds/docker-lockscreen.jpg'"
+
+- name: gnome | appearance | set lock screen background position
+  tags: gnome,gnome-lockscreen
+  become_user: docker
+  dconf:
+    key: "/org/gnome/desktop/screensaver/picture-options"
+    value: "'zoom'"
+    
+- name: gnome | appearance | gtk theme
+  tags: gnome,gnome-gtk-theme
+  become_user: docker
+  dconf:
+    key: "/org/gnome/desktop/interface/gtk-theme"
+    value: "'Yaru-dark'"    
+
+- name: gnome | appearance | dock autohide 1
+  tags: gnome,dock
+  become_user: docker
+  dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock/autohide"
+    value: "'True'" 
+    
+- name: gnome | appearance | dock autohide 2
+  tags: gnome,dock
+  become_user: docker
+  dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock/autohide-in-fullscreen"
+    value: "'True'" 
+
+- name: gnome | appearance | dock icon size
+  tags: gnome,dock
+  become_user: docker
+  dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock/dash-max-icon-size"
+    value: "18" 
+    
+- name: gnome | appearance | dock position
+  tags: gnome,dock
+  become_user: docker
+  dconf:
+    key: "/org/gnome/shell/extensions/dash-to-dock/dock-position"
+    value: "'BOTTOM'" 
+    
+- name: gnome | appearance | favourite apps
+  tags: gnome,dock
+  become_user: docker
+  dconf:
+    key: "/org/gnome/shell/favorite-apps"
+    value: "['firefox.desktop', 'org.gnome.Terminal.desktop', 'gedit.desktop', 'org.gnome.Nautilus.desktop']" 
+# -------------------------------------------- #
+
+
+

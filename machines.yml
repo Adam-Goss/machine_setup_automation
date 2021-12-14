@@ -4,12 +4,12 @@
   become: true 
   pre_tasks:
 
-  - name: repo index updates (Ubuntu)
-    tags: always
-    apt:
-      update_cache: yes 
-    changed_when: false
-    when: ansible_distribution == "Ubuntu"
+    #  - name: repo index updates (Ubuntu)
+    #    tags: always
+    #    apt:
+    #      update_cache: yes 
+    #    changed_when: false
+    #    when: ansible_distribution == "Ubuntu"
 
 - hosts: all
   become: true
@@ -20,6 +20,12 @@
   become: true
   roles:
     - dev_machine
+
+- hosts: docker_machine
+  become: true
+  roles:
+    - docker_machine
+
 
 - hosts: attack_machine
   become: true

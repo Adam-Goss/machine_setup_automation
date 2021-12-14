@@ -50,6 +50,5 @@ Walkthrough:
 
 To do:
 - add config files and tasks to copy across for common tools in roles/base
-- automate docker_machine
 - automate attack_machine
 - automate malware_machine
