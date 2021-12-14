@@ -24,6 +24,8 @@ This repository consists of the following files:
 
 - **roles/dev_machine** -- This role is for development machines and installs a development environment that currently includes; Python, Go, VSCode, and neovim. It also changes GUI-specific things based on the GNOME desktop.
 
+- **roles/docker_machine** -- This role is for machines that run/host docker images and installs docker, Portainer (for GUI management), and configures Heimdall image for dashboard management of internal services.
+
 - **roles/attack_machine** -- This role is for machines used for penetration testing and it installs pentesting tools and can be used to attack targets.
 
 - **roles/malware_machine** -- This role is for malware analysis machines and installs appropriate tools for this.
@@ -48,5 +50,6 @@ Walkthrough:
 
 To do:
 - add config files and tasks to copy across for common tools in roles/base
+- automate docker_machine
 - automate attack_machine
 - automate malware_machine
